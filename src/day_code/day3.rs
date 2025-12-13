@@ -3,34 +3,8 @@ use std::{
     io::{BufRead, BufReader},
 };
 
-fn lr_to_num(s: String) -> Option<i64> {
-    let (pre, num_str) = s.split_at_checked(1)?;
-    let num: i64 = num_str.parse().ok()?;
-
-    match pre {
-        "L" => Some(-num),
-        "R" => Some(num),
-        _ => None,
-    }
-}
-
 pub fn part_one(fname: String) -> Result<i64, std::io::Error> {
-    let file = File::open(fname)?;
-    let reader = BufReader::new(file);
-
-    let values: Vec<_> = reader
-        .lines()
-        .filter_map(|s| lr_to_num(s.unwrap()))
-        .collect();
-    let mut start = 50;
-    let mut counter = 0;
-    for v in values {
-        start = (start + v) % 100;
-        if start == 0 {
-            counter += 1;
-        }
-    }
-    Ok(counter)
+    Ok(0)
 }
 
 pub fn part_two(fname: String) -> Result<i64, std::io::Error> {
