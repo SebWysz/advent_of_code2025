@@ -1,5 +1,7 @@
 pub mod day_code;
 
+use day_code::{day1, day2, day3};
+
 use clap::{Parser, ValueEnum};
 use day_code::{day1, day2, day3};
 use std::io::{Error, ErrorKind};
