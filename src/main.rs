@@ -1,9 +1,8 @@
 pub mod day_code;
 
-use day_code::{day1, day2, day3};
+use day_code::{day1, day2, day3, day4};
 
 use clap::{Parser, ValueEnum};
-use day_code::{day1, day2, day3};
 use std::io::{Error, ErrorKind};
 
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Debug, ValueEnum)]
@@ -34,6 +33,8 @@ fn main() {
         (2, Part::Two) => day2::part_two(file_name),
         (3, Part::One) => day3::part_one(file_name),
         (3, Part::Two) => day3::part_two(file_name),
+        (4, Part::One) => day4::part_one(file_name),
+        (4, Part::Two) => day4::part_two(file_name),
         _ => Err(Error::new(ErrorKind::Other, "Invalid CLI Args")),
     };
 

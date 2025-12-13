@@ -27,9 +27,9 @@ pub fn part_one(fname: String) -> Result<i64, std::io::Error> {
         })
         .map(|(start, end): (i64, i64)| (start..=end).filter(|&n| is_invalid_id(&n)))
         .flatten()
-        .reduce(|acc, n| acc + n);
+        .sum();
 
-    res.ok_or(std::io::Error::new(std::io::ErrorKind::Other, "WTF"))
+    Ok(res)
 }
 
 fn is_invalid_id_pt2(n: &i64) -> bool {
@@ -75,7 +75,7 @@ pub fn part_two(fname: String) -> Result<i64, std::io::Error> {
         })
         .map(|(start, end): (i64, i64)| (start..=end).filter(|&n| is_invalid_id_pt2(&n)))
         .flatten()
-        .reduce(|acc, n| acc + n);
+        .sum();
 
-    res.ok_or(std::io::Error::new(std::io::ErrorKind::Other, "WTF"))
+    Ok(res)
 }
