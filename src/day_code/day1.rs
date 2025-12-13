@@ -1,10 +1,10 @@
-use std::collections::HashMap;
-use std::{fs::File, io, io::BufRead};
+use std::{
+    fs::File,
+    io::{BufRead, BufReader},
+};
 
-fn read_text_file() -> Result<(Vec<i32>, Vec<i32>), std::io::Error> {
-    let file = File::open("src/textfiles/day1.txt")?;
-    let reader = io::BufReader::new(file);
-
+/*
+fn read_text_file(fname: String) -> Result<(Vec<i32>, Vec<i32>), std::io::Error> {
     let mut first_vec: Vec<i32> = vec![];
     let mut second_vec: Vec<i32> = vec![];
     first_vec.reserve(1000);
@@ -21,33 +21,54 @@ fn read_text_file() -> Result<(Vec<i32>, Vec<i32>), std::io::Error> {
     }
     Ok((first_vec, second_vec))
 }
+*/
+fn lr_to_num(s: String) -> Option<i32> {
+    let (pre, num_str) = s.split_at_checked(1)?;
+    let num: i32 = num_str.parse().ok()?;
 
-pub fn first() -> Result<i32, std::io::Error> {
-    let (mut first_vec, mut second_vec) = read_text_file()?;
-    first_vec.sort();
-    second_vec.sort();
-    let distance = first_vec
-        .iter()
-        .zip(second_vec.iter())
-        .map(|(x, y)| (x - y).abs())
-        .reduce(|acc, x| acc + x);
-
-    Ok(distance.expect("No Distance"))
+    match pre {
+        "L" => Some(-num),
+        "R" => Some(num),
+        _ => None,
+    }
 }
 
-pub fn second() -> Result<i32, std::io::Error> {
-    let (first_vec, second_vec) = read_text_file()?;
+pub fn part_one(fname: String) -> Result<i32, std::io::Error> {
+    let file = File::open(fname)?;
+    let reader = BufReader::new(file);
 
-    let mut map: HashMap<&i32, i32> = HashMap::new();
-
-    for num in second_vec.iter() {
-        map.entry(num).and_modify(|count| *count += 1).or_insert(1);
+    let values: Vec<_> = reader
+        .lines()
+        .filter_map(|s| lr_to_num(s.unwrap()))
+        .collect();
+    let mut start = 50;
+    let mut counter = 0;
+    for v in values {
+        start = (start + v) % 100;
+        if start == 0 {
+            counter += 1;
+        }
     }
+    Ok(counter)
+}
 
-    let sim_score = first_vec
-        .iter()
-        .map(|x| x * map.get(x).unwrap_or(&0))
-        .reduce(|acc, x| acc + x);
+pub fn part_two(fname: String) -> Result<i32, std::io::Error> {
+    let file = File::open(fname)?;
+    let reader = BufReader::new(file);
 
-    Ok(sim_score.expect("Reduce Failed"))
+    let values: Vec<_> = reader
+        .lines()
+        .filter_map(|s| lr_to_num(s.unwrap()))
+        .collect();
+    let mut start = 50;
+    let mut counter = 0;
+    for v in values {
+        let new = start + v;
+        counter += new.abs() / 100;
+        if start.signum() != 0 && new.signum() != start.signum() {
+            counter += 1;
+        }
+        start = new % 100;
+    }
+    Ok(counter)
 }
