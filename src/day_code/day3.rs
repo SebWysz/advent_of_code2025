@@ -60,7 +60,7 @@ fn find_best_voltage_pt2(v: Vec<i64>) -> i64 {
                 .iter()
                 .enumerate()
                 .rev()
-                .max_by_key(|&(_, val)| val)
+                .max_by_key(|&(i, val)| (val, std::cmp::Reverse(i)))
                 .unwrap();
 
             (acc * 10 + digit, start + offset + 1)

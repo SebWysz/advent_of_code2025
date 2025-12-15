@@ -1,6 +1,6 @@
 pub mod day_code;
 
-use day_code::{day1, day2, day3, day4};
+use day_code::{day1, day2, day3, day4, day5, day6};
 
 use clap::{Parser, ValueEnum};
 use std::io::{Error, ErrorKind};
@@ -35,6 +35,10 @@ fn main() {
         (3, Part::Two) => day3::part_two(file_name),
         (4, Part::One) => day4::part_one(file_name),
         (4, Part::Two) => day4::part_two(file_name),
+        (5, Part::One) => day5::part_one(file_name),
+        (5, Part::Two) => day5::part_two(file_name),
+        (6, Part::One) => day6::part_one(file_name),
+        (6, Part::Two) => day6::part_two(file_name),
         _ => Err(Error::new(ErrorKind::Other, "Invalid CLI Args")),
     };
 

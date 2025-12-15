@@ -5,4 +5,5 @@ edition = "2024"
 
 [dependencies]
 clap = { version = "4.5.53", features = ["derive"] }
+interavl = "0.3.0"
 ndarray = "0.17.1"
